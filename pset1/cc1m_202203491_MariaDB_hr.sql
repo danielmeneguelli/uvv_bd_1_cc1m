@@ -1,4 +1,4 @@
-CREATE USER 'Danielmb'@'HOST' IDENTIFIED BY 'arthur2010';
+CREATE USER 'Danielmb'@'HOST' IDENTIFIED BY 'daniel2003';
 GRANT Reload ON *.* TO 'Danielmb'@'HOST';
 GRANT Process ON *.* TO 'Danielmb'@'HOST';
 GRANT File ON *.* TO 'Danielmb'@'HOST';
@@ -15,22 +15,7 @@ CREATE DATABASE `uvv` /*!40100 DEFAULT CHARACTER SET latin1 */;
 GRANT ALL PRIVILEGES ON uvv.* TO 'Danielmb'@'HOST';
 use uvv;
 
--- SQLINES DEMO *** rated by MySQL Workbench
--- SQLINES DEMO *** 55 2022
--- SQLINES DEMO ***    Version: 1.0
--- SQLINES DEMO *** orward Engineering
 
-/* SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; */
-/* SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; */
-/* SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'; */
-
--- SQLINES DEMO *** ------------------------------------
--- Schema hr
--- SQLINES DEMO *** ------------------------------------
-
--- SQLINES DEMO *** ------------------------------------
--- Schema hr
--- SQLINES DEMO *** ------------------------------------
 CREATE SCHEMA IF NOT EXISTS hr DEFAULT CHARACTER SET utf8 ;
 USE `hr` ;
 
@@ -46,10 +31,6 @@ CREATE TABLE IF NOT EXISTS hr.regioes (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- Table `hr`.`paises`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE IF NOT EXISTS hr.paises (
   `id_paises` CHAR(2) NOT NULL COMMENT 'primary kei da tabela',
   `nome` VARCHAR(50) NOT NULL COMMENT 'Nome do país.',
@@ -65,10 +46,6 @@ CREATE TABLE IF NOT EXISTS hr.paises (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** izacoes`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE IF NOT EXISTS hr.localizacoes (
   `id_localizacao` INT NOT NULL COMMENT 'primary key da tabela.',
   `endereco` VARCHAR(50) NULL COMMENT 'Endereço de um escritório ou uma facilidade da empresa.',
@@ -85,10 +62,6 @@ CREATE TABLE IF NOT EXISTS hr.localizacoes (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- Table `hr`.`cargos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE IF NOT EXISTS hr.cargos (
   `id_cargo` VARCHAR(10) NOT NULL COMMENT 'primary key da tabela.',
   `cargo` VARCHAR(35) NOT NULL COMMENT 'Nome do cargo.',
@@ -99,10 +72,6 @@ CREATE TABLE IF NOT EXISTS hr.cargos (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** gados`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE IF NOT EXISTS hr.empregados (
   `id_empregado` INT NOT NULL AUTO_INCREMENT COMMENT 'primary key da tabela',
   `nome` VARCHAR(75) NOT NULL COMMENT 'Nome e sobrenome do empregado.',
@@ -137,10 +106,6 @@ CREATE TABLE IF NOT EXISTS hr.empregados (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** tamentos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE IF NOT EXISTS hr.departamentos (
   `id_departamento` INT NOT NULL AUTO_INCREMENT COMMENT 'primary key da tabela.',
   `nome` VARCHAR(50) NULL COMMENT 'Nome do departamento da tabela.',
@@ -163,10 +128,7 @@ CREATE TABLE IF NOT EXISTS hr.departamentos (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** rico_cargos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE TABLE IF NOT EXISTS hr.historico_cargos (
   `id_empregado` INT NOT NULL COMMENT 'Parte chave primária composta da tabela(empregado_id e data inicial).Também é uma chave estrangeira para a tabela empregados.',
   `data_inicial` DATE NOT NULL COMMENT 'Parte da chave primária composta da tabela(empregado_id e data_inicial). Indica a data inicial do empregado em um novo cargo. deve ser menor do que a data_final.',
@@ -195,6 +157,3 @@ CREATE TABLE IF NOT EXISTS hr.historico_cargos (
 ENGINE = InnoDB;
 
 
-/* SET SQL_MODE=@OLD_SQL_MODE; */
-/* SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; */
-/* SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; *
