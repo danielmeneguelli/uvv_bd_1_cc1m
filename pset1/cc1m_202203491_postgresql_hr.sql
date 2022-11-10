@@ -45,29 +45,11 @@ SET SEARCH_PATH TO hr, "$user", public;
 
 -- Quinta tarefa: Criação das tabelas
 
--- SQLINES DEMO *** rated by MySQL Workbench
--- SQLINES DEMO *** 55 2022
--- SQLINES DEMO ***    Version: 1.0
--- SQLINES DEMO *** orward Engineering
 
-/* SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; */
-/* SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; */
-/* SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'; */
 
--- SQLINES DEMO *** ------------------------------------
--- Schema hr
--- SQLINES DEMO *** ------------------------------------
-
--- SQLINES DEMO *** ------------------------------------
--- Schema hr
--- SQLINES DEMO *** ------------------------------------
 CREATE SCHEMA IF NOT EXISTS hr DEFAULT CHARACTER SET utf8 ;
 SET SCHEMA 'hr' ;
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** es`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE SEQUENCE hr.regioes_seq;
 
 CREATE TABLE IF NOT EXISTS hr.regioes (
@@ -78,10 +60,7 @@ CREATE TABLE IF NOT EXISTS hr.regioes (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- Table `hr`.`paises`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE TABLE IF NOT EXISTS hr.paises (
   id_paises CHAR(2) NOT NULL ,
   nome VARCHAR(50) NOT NULL ,
@@ -97,10 +76,7 @@ CREATE TABLE IF NOT EXISTS hr.paises (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** izacoes`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE TABLE IF NOT EXISTS hr.localizacoes (
   id_localizacao INT NOT NULL ,
   endereco VARCHAR(50) NULL ,
@@ -117,10 +93,7 @@ CREATE TABLE IF NOT EXISTS hr.localizacoes (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- Table `hr`.`cargos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE TABLE IF NOT EXISTS hr.cargos (
   id_cargo VARCHAR(10) NOT NULL ,
   cargo VARCHAR(35) NOT NULL ,
@@ -131,10 +104,7 @@ CREATE TABLE IF NOT EXISTS hr.cargos (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** gados`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE SEQUENCE hr.empregados_seq;
 
 CREATE TABLE IF NOT EXISTS hr.empregados (
@@ -171,10 +141,7 @@ CREATE TABLE IF NOT EXISTS hr.empregados (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** tamentos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE SEQUENCE hr.departamentos_seq;
 
 CREATE TABLE IF NOT EXISTS hr.departamentos (
@@ -199,10 +166,7 @@ CREATE TABLE IF NOT EXISTS hr.departamentos (
 ENGINE = InnoDB;
 
 
--- SQLINES DEMO *** ------------------------------------
--- SQLINES DEMO *** rico_cargos`
--- SQLINES DEMO *** ------------------------------------
--- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 CREATE TABLE IF NOT EXISTS hr.historico_cargos (
   id_empregado INT NOT NULL ,
   data_inicial DATE NOT NULL ,
@@ -230,7 +194,3 @@ CREATE TABLE IF NOT EXISTS hr.historico_cargos (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
-/* SET SQL_MODE=@OLD_SQL_MODE; */
-/* SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; */
-/* SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; */
