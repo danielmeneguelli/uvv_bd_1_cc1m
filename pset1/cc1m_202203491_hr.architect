@@ -1,0 +1,199 @@
+CREATE TABLE public.regioes (
+                id_regiao INTEGER NOT NULL,
+                nome VARCHAR(25) NOT NULL,
+                CONSTRAINT regioes_pk PRIMARY KEY (id_regiao)
+);
+COMMENT ON TABLE public.regioes IS 'Tabela regiões, armazena os números e nomes das regiões.';
+COMMENT ON COLUMN public.regioes.id_regiao IS 'primary key da tabela.';
+COMMENT ON COLUMN public.regioes.nome IS 'Nome das regiões';
+
+
+CREATE UNIQUE INDEX regioes_idx
+ ON public.regioes
+ ( nome );
+
+CREATE TABLE public.paises (
+                id_pais CHAR(2) NOT NULL,
+                nome VARCHAR(50) NOT NULL,
+                id_regiao INTEGER,
+                CONSTRAINT paises_pk PRIMARY KEY (id_pais)
+);
+COMMENT ON TABLE public.paises IS 'Tabela paises, tabela com informações dos países.';
+COMMENT ON COLUMN public.paises.id_pais IS 'primary key da tabela.';
+COMMENT ON COLUMN public.paises.nome IS 'Nome do país';
+COMMENT ON COLUMN public.paises.id_regiao IS 'primary key da tabela.';
+
+
+CREATE UNIQUE INDEX paises_idx
+ ON public.paises
+ ( nome );
+
+CREATE TABLE public.localizacoes (
+                id_localizacoes INTEGER NOT NULL,
+                endereco VARCHAR(50),
+                cep VARCHAR(12),
+                cidade VARCHAR(50),
+                uf VARCHAR(25),
+                id_pais CHAR(2) NOT NULL,
+                CONSTRAINT localizacoes_pk PRIMARY KEY (id_localizacoes)
+);
+COMMENT ON TABLE public.localizacoes IS 'Tabela localizações, armazena os endereços de varios escritórios e facilidades da empresa. Não armazena endereços de clientes.';
+COMMENT ON COLUMN public.localizacoes.id_localizacoes IS 'primary key da tabela.';
+COMMENT ON COLUMN public.localizacoes.endereco IS 'endereço de um escritório ou facilidade da empresa';
+COMMENT ON COLUMN public.localizacoes.cep IS 'CEP da localização de um escritório ou facilidade da empresa.';
+COMMENT ON COLUMN public.localizacoes.cidade IS 'Cidade onde está localizado o escritório ou facilidade da empresa.';
+COMMENT ON COLUMN public.localizacoes.uf IS 'Estado onde está localizado o escritório ou outra facilidade da empresa.';
+COMMENT ON COLUMN public.localizacoes.id_pais IS 'primary key da tabela.';
+
+
+CREATE SEQUENCE public.cargos_id_cargo_seq;
+
+CREATE TABLE public.cargos (
+                id_cargo VARCHAR(10) NOT NULL DEFAULT nextval('public.cargos_id_cargo_seq'),
+                cargo VARCHAR(35) NOT NULL,
+                salario_minimo NUMERIC(8,2),
+                salario_maximo NUMERIC(8,2),
+                CONSTRAINT cargos_pk PRIMARY KEY (id_cargo)
+);
+COMMENT ON TABLE public.cargos IS 'Tabela cargos, que armazena os cargos que existem e a faixa salarial para cada cargo.';
+COMMENT ON COLUMN public.cargos.id_cargo IS 'primary key da tabela';
+COMMENT ON COLUMN public.cargos.cargo IS 'Nome do cargo';
+COMMENT ON COLUMN public.cargos.salario_minimo IS 'Menor salário aceito para um cargo.';
+COMMENT ON COLUMN public.cargos.salario_maximo IS 'Maior salário aceito para um cargo.';
+
+
+ALTER SEQUENCE public.cargos_id_cargo_seq OWNED BY public.cargos.id_cargo;
+
+CREATE TABLE public.empregados (
+                id_empregado INTEGER NOT NULL,
+                nome VARCHAR(75) NOT NULL,
+                email VARCHAR(35) NOT NULL,
+                telefone VARCHAR(20),
+                data_contratacao DATE NOT NULL,
+                id_cargo VARCHAR(10) NOT NULL,
+                salario NUMERIC(8,2),
+                comissao NUMERIC(8,2),
+                id_departamento INTEGER,
+                id_supervisor INTEGER,
+                CONSTRAINT empregados_pk PRIMARY KEY (id_empregado)
+);
+COMMENT ON TABLE public.empregados IS 'Tabela que armazena as informações dos empregados.';
+COMMENT ON COLUMN public.empregados.id_empregado IS 'primary key da tabela';
+COMMENT ON COLUMN public.empregados.nome IS 'Nome completo do empragado';
+COMMENT ON COLUMN public.empregados.email IS 'Parte inicial do email do empregado.';
+COMMENT ON COLUMN public.empregados.telefone IS 'Telefone do empregado.(espaço para código do país e DDD)';
+COMMENT ON COLUMN public.empregados.data_contratacao IS 'Data que o empregado iniciou no cargo atual.';
+COMMENT ON COLUMN public.empregados.id_cargo IS 'primary key da tabela';
+COMMENT ON COLUMN public.empregados.salario IS 'Salário mensal atual do empregado.';
+COMMENT ON COLUMN public.empregados.comissao IS 'Porcentagem da comissao de um empregado, apenas empregados do departamento de vendas sao elegíveis para comissões.';
+COMMENT ON COLUMN public.empregados.id_departamento IS 'primary key da tabela de departamentos, indica o departamento do empregado.';
+COMMENT ON COLUMN public.empregados.id_supervisor IS 'Chave estrangeira para a própria tabela empregados(auto-relacionamento). Indica o supervisor direto do empregado(pode corresponder ou não ao manager_id do departamento do empregado).';
+
+
+CREATE UNIQUE INDEX empregados_idx
+ ON public.empregados
+ ( email );
+
+CREATE TABLE public.departarmantos (
+                id_departamento INTEGER NOT NULL,
+                nome VARCHAR(50),
+                id_localizacoes INTEGER,
+                id_gerente INTEGER,
+                CONSTRAINT departarmantos_pk PRIMARY KEY (id_departamento)
+);
+COMMENT ON TABLE public.departarmantos IS 'Tabela que armazena as informações sobre os departamentos da empresa.';
+COMMENT ON COLUMN public.departarmantos.id_departamento IS 'primary key da tabela.';
+COMMENT ON COLUMN public.departarmantos.nome IS 'Nome do departamento da tabela.';
+COMMENT ON COLUMN public.departarmantos.id_localizacoes IS 'primary key da tabela.';
+COMMENT ON COLUMN public.departarmantos.id_gerente IS 'Chave estrangeira para atebela localizações.';
+
+
+CREATE UNIQUE INDEX departamentos_idx
+ ON public.departarmantos
+ ( nome );
+
+CREATE TABLE public.historico_empregados (
+                id_empregado INTEGER NOT NULL,
+                data_inicial DATE NOT NULL,
+                data_final DATE NOT NULL,
+                id_cargo VARCHAR(10) NOT NULL,
+                id_departamento INTEGER,
+                CONSTRAINT historico_empregados_pk PRIMARY KEY (id_empregado, data_inicial)
+);
+COMMENT ON TABLE public.historico_empregados IS 'Tabela que armazena o histórico de cargos de um empregado. Se um empregado mudar de departamento dentro de um cargo ou mudar de cargo dentro de um departamento, novas linhas devem ser inseridas nesta tabela com a informação antiga do empregado.';
+COMMENT ON COLUMN public.historico_empregados.id_empregado IS 'Parte da chave primária composta da tabela(empregado_id e data_inicial). Também é uma chave estrangeira para a tabela empregados';
+COMMENT ON COLUMN public.historico_empregados.data_inicial IS 'Parte da chave primária composta da tabela(empregado_id e data_inicial). indica a data inicial do empregado em um novo cargo. Deve ser menor do que a data_final.';
+COMMENT ON COLUMN public.historico_empregados.data_final IS 'Último dia de um empregado neste carg, deve ser maior que a data_inicial.';
+COMMENT ON COLUMN public.historico_empregados.id_cargo IS 'Chave estrangeira para a tabela de cargos.Corresponde ao cargo em que o empregado estava trabalhando no passado.';
+COMMENT ON COLUMN public.historico_empregados.id_departamento IS 'Chave estrangeira para a tabela de departamentos. Corresponde ao departamento em que o empregado estava trabalhando no passado.';
+
+
+ALTER TABLE public.paises ADD CONSTRAINT regioes_paises_fk
+FOREIGN KEY (id_regiao)
+REFERENCES public.regioes (id_regiao)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.localizacoes ADD CONSTRAINT paises_localizacoes_fk
+FOREIGN KEY (id_pais)
+REFERENCES public.paises (id_pais)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.departarmantos ADD CONSTRAINT localizacoes_departarmantos_fk
+FOREIGN KEY (id_localizacoes)
+REFERENCES public.localizacoes (id_localizacoes)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.empregados ADD CONSTRAINT cargos_empregados_fk
+FOREIGN KEY (id_cargo)
+REFERENCES public.cargos (id_cargo)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.historico_empregados ADD CONSTRAINT cargos_historico_empregados_fk
+FOREIGN KEY (id_cargo)
+REFERENCES public.cargos (id_cargo)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.empregados ADD CONSTRAINT empregados_empregados_fk
+FOREIGN KEY (id_supervisor)
+REFERENCES public.empregados (id_empregado)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.departarmantos ADD CONSTRAINT empregados_departarmantos_fk
+FOREIGN KEY (id_gerente)
+REFERENCES public.empregados (id_empregado)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.historico_empregados ADD CONSTRAINT empregados_historico_empregados_fk
+FOREIGN KEY (id_empregado)
+REFERENCES public.empregados (id_empregado)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.empregados ADD CONSTRAINT departarmantos_empregados_fk
+FOREIGN KEY (id_departamento)
+REFERENCES public.departarmantos (id_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.historico_empregados ADD CONSTRAINT departarmantos_historico_empregados_fk
+FOREIGN KEY (id_departamento)
+REFERENCES public.departarmantos (id_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
